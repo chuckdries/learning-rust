@@ -1,32 +1,14 @@
 #[derive(Debug)]
-struct Foobar(i32);
+struct Foobar(i32, i32);
 
 fn main() {
-    let x = Foobar(1);
-
+    let x = Foobar(1, 2);
     foo(x);
-    //foo(x);
-
-    let mut y = Foobar(2);
-
-    bar(&y);
-    bar(&y);
-
-    bar(&y);
-    let z = &mut y;
-
-    //baz(&mut y);
-    baz(z);
 }
 
-// move
-fn foo(_foobar: Foobar) {
-}
+fn foo(mut x: Foobar) {
 
-// read only reference
-fn bar(_foobar: &Foobar) {
-}
+    x.0 = 5; // changes the 0th value inside the product
 
-// mutable reference
-fn baz(_foobar: &mut Foobar) {
+    println!("{:?}", x);
 }
