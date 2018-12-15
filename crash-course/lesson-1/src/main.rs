@@ -1,9 +1,12 @@
 fn main() {
-    let val: String = String::from("Hello, world!");
-    printer(&val);
-    printer(&val);
-}
-
-fn printer(value: &String) -> () {
-    println!("value: {}", value);
+    let mut i = 1;
+    
+    loop {
+        println!("i == {}", i);
+        if i >= 10 {
+            break;
+        } else {
+            i += 1;
+        }
+    }
 }
