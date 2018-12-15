@@ -6,7 +6,7 @@ struct Person {
 }
 
 impl fmt::Display for Person {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> Result<(), std::fmt::Error> {
+    fn fmt(self: &Self, fmt: &mut fmt::Formatter) -> Result<(), std::fmt::Error> {
         write!(fmt, "{} ({} years old)", self.name, self.age)
     }
 }
