@@ -1,14 +1,20 @@
-#[derive(Debug)]
-struct Foobar(i32, i32);
+#[derive(Debug, Clone)]
+struct Foobar(i32);
 
-fn main() {
-    let x = Foobar(1, 2);
-    foo(x);
+impl Drop for Foobar {
+    fn drop(&mut self) {
+        println!("Dropping: {:?}", self);
+    }
 }
 
-fn foo(mut x: Foobar) {
+fn uses_foobar(foobar: Foobar) {
+    println!("I consumed a Foobar: {:?}", foobar);
+}
 
-    x.0 = 5; // changes the 0th value inside the product
-
-    println!("{:?}", x);
+fn main() {
+    let x = Foobar(1);
+    uses_foobar(x.clone());
+    uses_foobar(x);
+//    uses_foobar(x.clone());
+    println!("after!");
 }
