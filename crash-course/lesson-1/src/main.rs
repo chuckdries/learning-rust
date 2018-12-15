@@ -1,9 +1,9 @@
 fn main() {
     let val: String = String::from("Hello, world!");
-    printer(val.clone());
-    printer(val);
+    printer(&val);
+    printer(&val);
 }
 
-fn printer(value: String) -> () {
+fn printer(value: &String) -> () {
     println!("value: {}", value);
 }
