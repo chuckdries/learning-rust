@@ -7,14 +7,21 @@ impl Drop for Foobar {
     }
 }
 
+impl Foobar {
+    fn use_it(&self) {
+        println!("I consumed myself, a Foobar: {:?}", self);
+    }
+}
+
+fn uses_foobar(foobar: &Foobar) {
+    println!("I consumed a Foobar: {:?}", foobar);
+}
+
 fn main() {
-    println!("Before x");
-    let _x = Foobar(1);
-    println!("After x");
-//    {
-        println!("Before y");
-        let _y = Foobar(2);
-        println!("After y");
-//    }
-    println!("End of main");
+    let x = Foobar(1);
+    println!("Before uses_foobar");
+    x.use_it();
+    uses_foobar(&x);
+    uses_foobar(&x);
+    println!("After uses_foobar");
 }
