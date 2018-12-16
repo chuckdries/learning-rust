@@ -1,3 +1,5 @@
+use std::fmt::{Display, Formatter};
+
 enum VertDir {
     Up,
     Down,
@@ -6,6 +8,11 @@ enum VertDir {
 enum HorizDir {
     Left,
     Right
+}
+
+struct Vector2D {
+    x: f32,
+    y: f32,
 }
 
 struct Ball {
@@ -40,9 +47,28 @@ impl Game {
         Game {frame, ball}
     }
 
-    fn step(&self) {
-        self.ball.bounce(self.frame); //need to borrow?
+    fn step(&mut self) {
+        self.ball.bounce(&self.frame); //need to borrow?
         self.ball.mv();
+    }
+}
+
+impl Display for Game {
+    fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
+        let top_bottom = |fmt: &mut Formatter| {
+            write!(fmt, "+");
+            for _ in 0..self.frame.width {
+                write!(fmt, "-");
+            }
+            write!(fmt, "+\n")
+        };
+        top_bottom(&mut fmt);
+        for row in 0..self.frame.height {
+            write!(fmt, "|");
+            // asdf
+            write!(fmt, "|\n");
+        }
+        top_bottom(&mut fmt)
     }
 }
 
@@ -53,14 +79,12 @@ impl Ball {
         } else if self.x == frame.width - 1 {
             self.horiz_dir = HorizDir::Left;
         }
-
         if self.y == 0 {
             self.vert_dir = VertDir::Down;
         } else if self.y == frame.height - 1 {
             self.vert_dir = VertDir::Up;
         }
     }
-
     fn mv(&mut self) {
         match self.horiz_dir {
             HorizDir::Left => self.x -= 1,
@@ -76,5 +100,5 @@ impl Ball {
 
 
 fn main() {
-    println!("Hello, world!");
+    println!("{}", Game::new());
 }
