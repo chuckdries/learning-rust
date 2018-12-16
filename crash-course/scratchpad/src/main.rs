@@ -1,8 +1,9 @@
-use std::env::args;
-//use std::option::Option;
+use std::env::{args, Args};
+use std::iter::Skip;
 
 fn main() {
-    for arg in args().skip(1) {
+    let args: Skip<Args> = args().skip(1);
+    for arg in args {
         println!("{}", arg);
     }
 }
