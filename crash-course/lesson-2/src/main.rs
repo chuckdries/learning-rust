@@ -1,20 +1,13 @@
 #[derive(Debug)]
 struct Foobar(i32);
 
-impl Clone for Foobar {
-    fn clone(&self) -> Foobar {
-        Foobar(self.0)
-    }
+fn double(num: Foobar) -> Foobar {
+    Foobar(num.0 * 2)
 }
 
-impl Copy for Foobar {}
-
-fn uses_foobar(foobar: Foobar) {
-    println!("I consumed a Foobar: {:?}", foobar);
-}
 
 fn main() {
-    let x = Foobar(1);
-    uses_foobar(x);
-    uses_foobar(x);
+    let x: Foobar = Foobar(1);
+    let y: Foobar = double(x);
+    println!("{}", y.0);
 }
