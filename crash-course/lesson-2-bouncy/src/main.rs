@@ -40,7 +40,7 @@ impl Game {
         };
         let ball = Ball {
             x: 2,
-            y: 4,
+            y: 2,
             vert_dir: VertDir::Up,
             horiz_dir: HorizDir::Left,
         };
@@ -62,13 +62,21 @@ impl Display for Game {
             }
             write!(fmt, "+\n")
         };
-        top_bottom(&mut fmt);
+
+        top_bottom(fmt);
         for row in 0..self.frame.height {
             write!(fmt, "|");
-            // asdf
+            for column in 0..self.frame.width {
+                let c = if row == self.ball.y && column == self.ball.x {
+                    'o'
+                } else {
+                    ' '
+                };
+                write!(fmt, "{}", c);
+            }
             write!(fmt, "|\n");
         }
-        top_bottom(&mut fmt)
+        top_bottom(fmt)
     }
 }
 
@@ -100,5 +108,11 @@ impl Ball {
 
 
 fn main() {
-    println!("{}", Game::new());
+    let mut game = Game::new();
+    let sleep_duration = std::time::Duration::from_millis(33);
+    loop {
+        println!("{}", game);
+        game.step();
+        std::thread::sleep(sleep_duration);
+    }
 }
